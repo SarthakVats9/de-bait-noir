@@ -80,7 +80,7 @@ export const Registration = () => {
     setIsSubmitting(true);
 
     try {
-      const { error } = await supabase.from("registrations").insert([formData]);
+      const { error } = await (supabase as any).from("registrations").insert([formData]);
 
       if (error) {
         if (error.message.includes("unique_roll_numbers_per_team")) {
