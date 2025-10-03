@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import crimeBoardBg from "@/assets/crime-board.jpg";
+import debsocLogo from "@/assets/debsoc-logo.png";
 import { Skull } from "lucide-react";
 export const Hero = () => {
   const scrollToRegistration = () => {
@@ -21,8 +22,12 @@ export const Hero = () => {
 
       {/* Content */}
       <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
-        <div className="mb-6 flex justify-center">
-          <Skull className="w-16 h-16 text-primary animate-float" />
+        <div className="mb-8 flex justify-center">
+          <img 
+            src={debsocLogo} 
+            alt="Debating Society NIT Durgapur Logo" 
+            className="w-24 h-24 md:w-32 md:h-32 object-contain brightness-0 invert opacity-90 animate-float"
+          />
         </div>
         
         <h1 className="font-typewriter text-6xl md:text-8xl font-bold mb-6 animate-glitch text-spotlight">

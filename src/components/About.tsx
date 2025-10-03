@@ -29,10 +29,19 @@ export const About = () => {
 
           <Card className="bg-card border-border p-8 hover:border-accent transition-all duration-300 hover:shadow-lg hover:shadow-accent/20">
             <Users className="w-12 h-12 text-accent mb-4" />
-            <h3 className="font-typewriter text-2xl mb-3 text-spotlight">The Debating Society</h3>
-            <p className="font-serif text-muted-foreground">
-              Organized by NIT Durgapur's premier debating society, known for hosting intellectually stimulating events.
-            </p>
+            <a 
+              href="https://debsoc-nitdgp-frontend-vert.vercel.app/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="block group"
+            >
+              <h3 className="font-typewriter text-2xl mb-3 text-spotlight group-hover:text-accent transition-colors">
+                The Debating Society
+              </h3>
+              <p className="font-serif text-muted-foreground">
+                Organized by NIT Durgapur's premier debating society, known for hosting intellectually stimulating events.
+              </p>
+            </a>
           </Card>
 
           <Card className="bg-card border-border p-8 hover:border-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/20">
