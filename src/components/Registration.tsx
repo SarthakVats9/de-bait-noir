@@ -1,42 +1,128 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { Stamp } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Registration = () => {
   const [formData, setFormData] = useState({
-    teamName: "",
-    leaderName: "",
-    leaderEmail: "",
-    leaderPhone: "",
-    member2Name: "",
-    member3Name: "",
-    institution: "",
-    experience: "",
+    team_name: "",
+    member1_name: "",
+    member1_roll: "",
+    member1_email: "",
+    member2_name: "",
+    member2_roll: "",
+    member2_email: "",
+    member3_name: "",
+    member3_roll: "",
+    member3_email: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    toast.success("Alibi submitted! We'll contact you soon, detective.", {
-      description: "Check your email for confirmation details.",
-    });
-    // Reset form
-    setFormData({
-      teamName: "",
-      leaderName: "",
-      leaderEmail: "",
-      leaderPhone: "",
-      member2Name: "",
-      member3Name: "",
-      institution: "",
-      experience: "",
-    });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const validateForm = () => {
+    // Check for required fields
+    if (!formData.team_name || !formData.member1_name || !formData.member1_roll || !formData.member1_email) {
+      toast.error("Case incomplete!", {
+        description: "Team name and Member 1 details are required.",
+      });
+      return false;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.member1_email)) {
+      toast.error("Invalid evidence!", {
+        description: "Member 1 email format is invalid.",
+      });
+      return false;
+    }
+
+    if (formData.member2_email && !emailRegex.test(formData.member2_email)) {
+      toast.error("Invalid evidence!", {
+        description: "Member 2 email format is invalid.",
+      });
+      return false;
+    }
+
+    if (formData.member3_email && !emailRegex.test(formData.member3_email)) {
+      toast.error("Invalid evidence!", {
+        description: "Member 3 email format is invalid.",
+      });
+      return false;
+    }
+
+    // Check for duplicate roll numbers within the team
+    const rolls = [
+      formData.member1_roll,
+      formData.member2_roll,
+      formData.member3_roll,
+    ].filter(Boolean);
+
+    const uniqueRolls = new Set(rolls);
+    if (rolls.length !== uniqueRolls.size) {
+      toast.error("Duplicate identity detected!", {
+        description: "Each team member must have a unique roll number.",
+      });
+      return false;
+    }
+
+    return true;
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!validateForm()) return;
+
+    setIsSubmitting(true);
+
+    try {
+      const { error } = await supabase.from("registrations").insert([formData]);
+
+      if (error) {
+        if (error.message.includes("unique_roll_numbers_per_team")) {
+          toast.error("Identity conflict!", {
+            description: "One of these roll numbers is already registered.",
+          });
+        } else {
+          toast.error("Case files locked!", {
+            description: "Registration failed. Try again later.",
+          });
+        }
+        console.error("Registration error:", error);
+      } else {
+        toast.success("Alibi submitted successfully! 🕵️", {
+          description: "Your team has been registered for Take DeBait 7.0.",
+        });
+        
+        // Reset form
+        setFormData({
+          team_name: "",
+          member1_name: "",
+          member1_roll: "",
+          member1_email: "",
+          member2_name: "",
+          member2_roll: "",
+          member2_email: "",
+          member3_name: "",
+          member3_roll: "",
+          member3_email: "",
+        });
+      }
+    } catch (error) {
+      toast.error("Unexpected error!", {
+        description: "Something went wrong. Please try again.",
+      });
+      console.error("Unexpected error:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -91,34 +177,20 @@ export const Registration = () => {
                   TEAM NAME *
                 </label>
                 <Input
-                  name="teamName"
-                  value={formData.teamName}
+                  name="team_name"
+                  value={formData.team_name}
                   onChange={handleChange}
                   required
                   placeholder="The Alibi Squad"
                   className="bg-noir/50 border-accent/30 text-spotlight font-serif"
                 />
               </div>
-
-              <div>
-                <label className="font-typewriter text-sm text-accent mb-2 block">
-                  INSTITUTION *
-                </label>
-                <Input
-                  name="institution"
-                  value={formData.institution}
-                  onChange={handleChange}
-                  required
-                  placeholder="NIT Durgapur"
-                  className="bg-noir/50 border-accent/30 text-spotlight font-serif"
-                />
-              </div>
             </div>
 
-            {/* Team Leader */}
+            {/* Member 1 */}
             <div className="pt-4 border-t border-dashed border-accent/20">
               <h4 className="font-typewriter text-lg text-primary mb-4">
-                LEAD DETECTIVE
+                MEMBER 1 (REQUIRED)
               </h4>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
@@ -126,8 +198,8 @@ export const Registration = () => {
                     NAME *
                   </label>
                   <Input
-                    name="leaderName"
-                    value={formData.leaderName}
+                    name="member1_name"
+                    value={formData.member1_name}
                     onChange={handleChange}
                     required
                     placeholder="Sherlock Holmes"
@@ -136,81 +208,124 @@ export const Registration = () => {
                 </div>
                 <div>
                   <label className="font-typewriter text-sm text-accent mb-2 block">
-                    EMAIL *
+                    ROLL NUMBER *
                   </label>
                   <Input
-                    name="leaderEmail"
-                    type="email"
-                    value={formData.leaderEmail}
+                    name="member1_roll"
+                    value={formData.member1_roll}
                     onChange={handleChange}
                     required
-                    placeholder="detective@mystery.com"
+                    placeholder="21CS1001"
                     className="bg-noir/50 border-accent/30 text-spotlight font-serif"
                   />
                 </div>
               </div>
               <div className="mt-4">
                 <label className="font-typewriter text-sm text-accent mb-2 block">
-                  PHONE *
+                  EMAIL *
                 </label>
                 <Input
-                  name="leaderPhone"
-                  type="tel"
-                  value={formData.leaderPhone}
+                  name="member1_email"
+                  type="email"
+                  value={formData.member1_email}
                   onChange={handleChange}
                   required
-                  placeholder="+91 XXXXXXXXXX"
+                  placeholder="detective@mystery.com"
                   className="bg-noir/50 border-accent/30 text-spotlight font-serif"
                 />
               </div>
             </div>
 
-            {/* Team Members */}
+            {/* Member 2 */}
             <div className="pt-4 border-t border-dashed border-accent/20">
               <h4 className="font-typewriter text-lg text-primary mb-4">
-                ADDITIONAL DETECTIVES
+                MEMBER 2 (OPTIONAL)
               </h4>
-              <div className="space-y-4">
+              <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <label className="font-typewriter text-sm text-accent mb-2 block">
-                    MEMBER 2 NAME *
+                    NAME
                   </label>
                   <Input
-                    name="member2Name"
-                    value={formData.member2Name}
+                    name="member2_name"
+                    value={formData.member2_name}
                     onChange={handleChange}
-                    required
                     placeholder="Dr. Watson"
                     className="bg-noir/50 border-accent/30 text-spotlight font-serif"
                   />
                 </div>
                 <div>
                   <label className="font-typewriter text-sm text-accent mb-2 block">
-                    MEMBER 3 NAME (Optional)
+                    ROLL NUMBER
                   </label>
                   <Input
-                    name="member3Name"
-                    value={formData.member3Name}
+                    name="member2_roll"
+                    value={formData.member2_roll}
+                    onChange={handleChange}
+                    placeholder="21CS1002"
+                    className="bg-noir/50 border-accent/30 text-spotlight font-serif"
+                  />
+                </div>
+              </div>
+              <div className="mt-4">
+                <label className="font-typewriter text-sm text-accent mb-2 block">
+                  EMAIL
+                </label>
+                <Input
+                  name="member2_email"
+                  type="email"
+                  value={formData.member2_email}
+                  onChange={handleChange}
+                  placeholder="watson@mystery.com"
+                  className="bg-noir/50 border-accent/30 text-spotlight font-serif"
+                />
+              </div>
+            </div>
+
+            {/* Member 3 */}
+            <div className="pt-4 border-t border-dashed border-accent/20">
+              <h4 className="font-typewriter text-lg text-primary mb-4">
+                MEMBER 3 (OPTIONAL)
+              </h4>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <label className="font-typewriter text-sm text-accent mb-2 block">
+                    NAME
+                  </label>
+                  <Input
+                    name="member3_name"
+                    value={formData.member3_name}
                     onChange={handleChange}
                     placeholder="Inspector Lestrade"
                     className="bg-noir/50 border-accent/30 text-spotlight font-serif"
                   />
                 </div>
+                <div>
+                  <label className="font-typewriter text-sm text-accent mb-2 block">
+                    ROLL NUMBER
+                  </label>
+                  <Input
+                    name="member3_roll"
+                    value={formData.member3_roll}
+                    onChange={handleChange}
+                    placeholder="21CS1003"
+                    className="bg-noir/50 border-accent/30 text-spotlight font-serif"
+                  />
+                </div>
               </div>
-            </div>
-
-            {/* Experience */}
-            <div className="pt-4 border-t border-dashed border-accent/20">
-              <label className="font-typewriter text-sm text-accent mb-2 block">
-                PREVIOUS CASES (Prior Debate Experience)
-              </label>
-              <Textarea
-                name="experience"
-                value={formData.experience}
-                onChange={handleChange}
-                placeholder="Tell us about your team's debate history..."
-                className="bg-noir/50 border-accent/30 text-spotlight font-serif min-h-32"
-              />
+              <div className="mt-4">
+                <label className="font-typewriter text-sm text-accent mb-2 block">
+                  EMAIL
+                </label>
+                <Input
+                  name="member3_email"
+                  type="email"
+                  value={formData.member3_email}
+                  onChange={handleChange}
+                  placeholder="lestrade@mystery.com"
+                  className="bg-noir/50 border-accent/30 text-spotlight font-serif"
+                />
+              </div>
             </div>
 
             {/* Submit button styled as wax seal */}
@@ -218,10 +333,11 @@ export const Registration = () => {
               <Button
                 type="submit"
                 size="lg"
-                className="font-typewriter text-lg px-12 py-6 bg-primary hover:bg-primary/90 text-primary-foreground shadow-2xl shadow-primary/50 transition-all hover:scale-105 relative group"
+                disabled={isSubmitting}
+                className="font-typewriter text-lg px-12 py-6 bg-primary hover:bg-primary/90 text-primary-foreground shadow-2xl shadow-primary/50 transition-all hover:scale-105 relative group disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Stamp className="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform" />
-                Submit Alibi
+                {isSubmitting ? "Filing Alibi..." : "Submit Alibi"}
               </Button>
             </div>
           </form>
