@@ -2,23 +2,78 @@ import { Button } from "@/components/ui/button";
 import crimeBoardBg from "@/assets/crime-board.jpg";
 import debsocLogo from "@/assets/debsoc-logo.png";
 import { Skull } from "lucide-react";
+import { useState, useEffect } from "react";
+
 export const Hero = () => {
+  const [morseVisible, setMorseVisible] = useState(true);
+  const [timeMessage, setTimeMessage] = useState("");
+
+  // Morse code blinking effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setMorseVisible(prev => !prev);
+    }, 500);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Time-based message
+  useEffect(() => {
+    const hour = new Date().getHours();
+    if (hour >= 0 && hour < 6) {
+      setTimeMessage("🌙 Burning the midnight oil? A true detective never sleeps!");
+    } else if (hour >= 6 && hour < 12) {
+      setTimeMessage("🌅 Morning detective! Early bird catches the clues.");
+    } else if (hour >= 12 && hour < 18) {
+      setTimeMessage("☀️ Afternoon investigation in progress...");
+    } else {
+      setTimeMessage("🌆 Evening detective! Prime time for case solving.");
+    }
+  }, []);
+
   const scrollToRegistration = () => {
     const registration = document.getElementById("registration");
     registration?.scrollIntoView({
       behavior: "smooth"
     });
   };
-  return <section className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{
-    backgroundImage: `url(${crimeBoardBg})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center'
-  }}>
+
+  return (
+    <section 
+      className="relative min-h-screen flex items-center justify-center overflow-hidden" 
+      style={{
+        backgroundImage: `url(${crimeBoardBg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}
+    >
       {/* Spotlight overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-noir/80 via-noir/60 to-noir/90 animate-spotlight" />
       
       {/* Fog effect */}
       <div className="absolute inset-0 bg-gradient-to-t from-noir via-transparent to-transparent opacity-80" />
+
+      {/* Morse code easter egg - top right corner */}
+      <div className="absolute top-8 right-8 z-20">
+        <div 
+          className={`w-3 h-3 rounded-full bg-red-500 transition-opacity duration-100 cursor-pointer ${morseVisible ? 'opacity-100' : 'opacity-0'}`}
+          onClick={() => {
+            const toast = (window as any).toast;
+            if (toast) {
+              toast("📡 Morse Signal Detected!", {
+                description: "Evidence #6: 'TD7' in morse code - The truth blinks in the darkness"
+              });
+            }
+          }}
+          title="Strange blinking light..."
+        />
+      </div>
+
+      {/* Time-based message */}
+      {timeMessage && (
+        <div className="absolute top-8 left-8 z-20 bg-noir/80 border border-gold/30 px-4 py-2 rounded font-serif text-sm text-gold/80 max-w-xs">
+          {timeMessage}
+        </div>
+      )}
 
       {/* Content */}
       <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
@@ -30,12 +85,15 @@ export const Hero = () => {
           />
         </div>
         
-        <h1 className="font-cinzel text-6xl md:text-9xl font-black mb-8 text-glow-gold tracking-wider" style={{
-          background: 'linear-gradient(135deg, hsl(45 100% 65%), hsl(45 100% 45%))',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          filter: 'drop-shadow(0 0 20px hsl(45 100% 55% / 0.5))'
-        }}>
+        <h1 
+          className="font-cinzel text-6xl md:text-9xl font-black mb-8 text-glow-gold tracking-wider" 
+          style={{
+            background: 'linear-gradient(135deg, hsl(45 100% 65%), hsl(45 100% 45%))',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            filter: 'drop-shadow(0 0 20px hsl(45 100% 55% / 0.5))'
+          }}
+        >
           Take DeBait 7.0
         </h1>
         
@@ -69,5 +127,6 @@ export const Hero = () => {
 
       {/* Bottom fade */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-noir to-transparent" />
-    </section>;
+    </section>
+  );
 };

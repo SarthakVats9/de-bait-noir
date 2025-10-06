@@ -1,5 +1,6 @@
 import { Calendar, MapPin, Users2, FileText } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { useState } from "react";
 
 const details = [
   {
@@ -38,6 +39,23 @@ const rules = [
 ];
 
 export const EventDetails = () => {
+  const [doubleClickCount, setDoubleClickCount] = useState<{[key: number]: number}>({});
+
+  const handleCardDoubleClick = (index: number) => {
+    const count = (doubleClickCount[index] || 0) + 1;
+    setDoubleClickCount({ ...doubleClickCount, [index]: count });
+
+    if (count === 3) {
+      const toast = (window as any).toast;
+      if (toast) {
+        toast("🔍 Thorough Investigation!", {
+          description: `Evidence #${index + 1}: You've examined this clue carefully. A true detective leaves no stone unturned.`
+        });
+      }
+      setDoubleClickCount({ ...doubleClickCount, [index]: 0 });
+    }
+  };
+
   return (
     <section className="py-20 px-4 relative">
       <div className="max-w-6xl mx-auto">
@@ -57,7 +75,9 @@ export const EventDetails = () => {
           {details.map((detail, index) => (
             <Card
               key={index}
-              className="bg-card border-border p-6 hover:border-accent transition-all duration-300 hover:shadow-lg hover:shadow-accent/20 group"
+              onDoubleClick={() => handleCardDoubleClick(index)}
+              className="bg-card border-border p-6 hover:border-accent transition-all duration-300 hover:shadow-lg hover:shadow-accent/20 group cursor-pointer"
+              title="Double-click to investigate thoroughly"
             >
               <detail.icon className="w-10 h-10 text-accent mb-4 group-hover:scale-110 transition-transform" />
               <p className="font-typewriter text-sm text-muted-foreground mb-2">
@@ -99,10 +119,20 @@ export const EventDetails = () => {
             ))}
           </ul>
 
-          {/* Evidence tag */}
-          <div className="mt-8 inline-block bg-accent/10 border border-accent/30 px-4 py-2 font-typewriter text-accent text-sm">
-            EVIDENCE #TD7-2025
-          </div>
+          {/* Evidence tag - Interactive easter egg */}
+          <button
+            onClick={() => {
+              const toast = (window as any).toast;
+              if (toast) {
+                toast("📋 Evidence Tag Scanned", {
+                  description: "This evidence is authenticated. Case file verified for Take DeBait 7.0"
+                });
+              }
+            }}
+            className="mt-8 inline-block bg-accent/10 border border-accent/30 px-4 py-2 font-typewriter text-accent text-sm hover:bg-accent/20 hover:scale-105 transition-all cursor-pointer"
+          >
+            EVIDENCE #TD7-2025 [CLICK TO VERIFY]
+          </button>
         </Card>
       </div>
     </section>

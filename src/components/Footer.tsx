@@ -36,27 +36,33 @@ export const Footer = () => {
                 </h3>
               </div>
               <div className="flex gap-4">
-                <a 
-                  href="#" 
-                  className="w-10 h-10 bg-secondary hover:bg-primary/20 rounded-lg flex items-center justify-center transition-all hover:scale-110 group"
-                  aria-label="Instagram"
-                >
-                  <Instagram className="w-5 h-5 text-muted-foreground group-hover:text-primary" />
-                </a>
-                <a 
-                  href="#" 
-                  className="w-10 h-10 bg-secondary hover:bg-primary/20 rounded-lg flex items-center justify-center transition-all hover:scale-110 group"
-                  aria-label="Facebook"
-                >
-                  <Facebook className="w-5 h-5 text-muted-foreground group-hover:text-primary" />
-                </a>
-                <a 
-                  href="#" 
-                  className="w-10 h-10 bg-secondary hover:bg-primary/20 rounded-lg flex items-center justify-center transition-all hover:scale-110 group"
-                  aria-label="LinkedIn"
-                >
-                  <Linkedin className="w-5 h-5 text-muted-foreground group-hover:text-primary" />
-                </a>
+              <a 
+                href="https://www.instagram.com/debsocnitd/?hl=en" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-secondary hover:bg-primary/20 rounded-lg flex items-center justify-center transition-all hover:scale-110 group"
+                aria-label="Instagram"
+              >
+                <Instagram className="w-5 h-5 text-muted-foreground group-hover:text-primary" />
+              </a>
+              <a 
+                href="https://www.facebook.com/debatingsociety3103.nitd/" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-secondary hover:bg-primary/20 rounded-lg flex items-center justify-center transition-all hover:scale-110 group"
+                aria-label="Facebook"
+              >
+                <Facebook className="w-5 h-5 text-muted-foreground group-hover:text-primary" />
+              </a>
+              <a 
+                href="https://in.linkedin.com/company/debating-society-nit-durgapur" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-secondary hover:bg-primary/20 rounded-lg flex items-center justify-center transition-all hover:scale-110 group"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="w-5 h-5 text-muted-foreground group-hover:text-primary" />
+              </a>
               </div>
             </div>
 
@@ -88,11 +94,21 @@ export const Footer = () => {
           </p>
         </div>
 
-        {/* Easter egg */}
+        {/* Easter egg - Classified document */}
         <div className="mt-8 text-center">
-          <p className="font-serif text-xs text-muted-foreground/30 hover:text-accent transition-colors cursor-default">
-            🕵️ You found the hidden clue! Congrats, detective.
-          </p>
+          <button 
+            onClick={() => {
+              const toast = (window as any).toast;
+              if (toast) {
+                toast("🚫 ACCESS DENIED - Classified Evidence", {
+                  description: "Security clearance required. Nice try, detective!"
+                });
+              }
+            }}
+            className="font-typewriter text-xs text-red-500/50 hover:text-red-500 transition-colors cursor-pointer border border-red-500/30 px-3 py-1 hover:border-red-500"
+          >
+            [CLASSIFIED DOCUMENT - DO NOT OPEN]
+          </button>
         </div>
       </div>
     </footer>

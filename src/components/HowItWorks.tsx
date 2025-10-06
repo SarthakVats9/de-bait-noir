@@ -1,4 +1,5 @@
 import { Users, Gavel, Target, Trophy } from "lucide-react";
+import { useState, useEffect } from "react";
 
 const steps = [
   {
@@ -28,6 +29,30 @@ const steps = [
 ];
 
 export const HowItWorks = () => {
+  const [clickSequence, setClickSequence] = useState<number[]>([]);
+  const [unlocked, setUnlocked] = useState(false);
+
+  const handleStepClick = (index: number) => {
+    const newSequence = [...clickSequence, index + 1];
+    setClickSequence(newSequence);
+
+    // Check if sequence matches 1-2-3-4
+    if (newSequence.length === 4) {
+      if (newSequence.every((val, idx) => val === idx + 1)) {
+        if (!unlocked) {
+          setUnlocked(true);
+          const toast = (window as any).toast;
+          if (toast) {
+            toast("🎖️ Sequential Thinker!", {
+              description: "Evidence #5: 'Order matters in detective work' - You followed the steps perfectly!"
+            });
+          }
+        }
+      }
+      setClickSequence([]);
+    }
+  };
+
   return (
     <section className="py-20 px-4 bg-gradient-to-b from-noir to-secondary relative overflow-hidden">
       {/* Background decoration */}
@@ -44,6 +69,9 @@ export const HowItWorks = () => {
           <div className="w-24 h-1 bg-accent mx-auto mb-8" />
           <p className="font-serif text-xl text-muted-foreground">
             Follow the clues to victory
+          </p>
+          <p className="font-serif text-xs text-accent/50 mt-4 hover:text-accent transition-colors">
+            💡 Hint: Click the step numbers in order...
           </p>
         </div>
 
@@ -76,10 +104,14 @@ export const HowItWorks = () => {
                   <div className="w-20 h-20 rounded-full bg-card border-4 border-primary flex items-center justify-center shadow-lg shadow-primary/30">
                     <step.icon className={`w-10 h-10 ${step.color}`} />
                   </div>
-                  {/* Step number */}
-                  <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-accent text-noir font-typewriter text-sm flex items-center justify-center font-bold shadow-lg shadow-accent/50">
+                  {/* Step number - Interactive */}
+                  <button
+                    onClick={() => handleStepClick(index)}
+                    className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-accent text-noir font-typewriter text-sm flex items-center justify-center font-bold shadow-lg shadow-accent/50 hover:scale-125 hover:rotate-12 transition-all cursor-pointer"
+                    title="Click in sequence"
+                  >
                     {index + 1}
-                  </div>
+                  </button>
                 </div>
 
                 {/* Spacer */}
