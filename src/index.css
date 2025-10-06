@@ -8,47 +8,56 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 5%;
+    --background: 0 0% 3%;
     --foreground: 0 0% 95%;
 
-    --card: 0 0% 8%;
+    --card: 0 0% 6%;
     --card-foreground: 0 0% 95%;
 
-    --popover: 0 0% 8%;
+    --popover: 0 0% 6%;
     --popover-foreground: 0 0% 95%;
 
-    --primary: 0 70% 45%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 0 65% 45%;
+    --primary-foreground: 45 100% 95%;
 
-    --secondary: 0 0% 15%;
+    --secondary: 0 0% 12%;
     --secondary-foreground: 0 0% 95%;
 
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 55%;
 
-    --accent: 50 100% 60%;
-    --accent-foreground: 0 0% 10%;
+    --accent: 45 100% 55%;
+    --accent-foreground: 0 0% 5%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 15%;
-    --ring: 0 70% 45%;
+    --border: 0 0% 15%;
+    --input: 0 0% 12%;
+    --ring: 45 100% 55%;
 
     --radius: 0.5rem;
 
-    /* Mystery theme colors */
-    --noir: 0 0% 5%;
-    --maroon: 0 70% 35%;
-    --crime-yellow: 50 100% 60%;
+    /* Refined noir detective theme */
+    --noir: 0 0% 3%;
+    --noir-deep: 0 0% 6%;
+    --crimson: 0 65% 45%;
+    --crimson-glow: 0 65% 35%;
+    --gold: 45 100% 55%;
+    --gold-soft: 45 80% 65%;
+    --silver: 0 0% 75%;
     --parchment: 40 20% 85%;
     --spotlight: 0 0% 95%;
-    --noir-gray: 0 0% 20%;
     
-    /* Gradients */
-    --gradient-spotlight: radial-gradient(circle at 50% 0%, hsl(0 70% 45% / 0.2), transparent 70%);
-    --gradient-fog: linear-gradient(180deg, hsl(0 0% 5% / 0) 0%, hsl(0 0% 8% / 0.8) 100%);
+    /* Premium gradients */
+    --gradient-spotlight: radial-gradient(circle at 50% 0%, hsl(45 100% 55% / 0.15), transparent 70%);
+    --gradient-fog: linear-gradient(180deg, hsl(0 0% 3% / 0) 0%, hsl(0 0% 6% / 0.9) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(45 100% 55% / 0.2), hsl(45 100% 45% / 0.05));
+    --gradient-crimson: linear-gradient(135deg, hsl(0 65% 45% / 0.3), transparent);
+    
+    /* Shadows */
+    --shadow-gold: 0 0 30px hsl(45 100% 55% / 0.4), 0 0 60px hsl(45 100% 55% / 0.2);
+    --shadow-crimson: 0 0 20px hsl(0 65% 45% / 0.5);
   }
 }
 
@@ -133,6 +142,22 @@ All colors MUST be HSL.
 
   .font-serif {
     font-family: 'Crimson Pro', serif;
+  }
+
+  .font-cinzel {
+    font-family: 'Cinzel Decorative', cursive;
+  }
+
+  .text-glow-gold {
+    text-shadow: var(--shadow-gold);
+  }
+
+  .shadow-glow-gold {
+    box-shadow: var(--shadow-gold);
+  }
+
+  .shadow-glow-crimson {
+    box-shadow: var(--shadow-crimson);
   }
 }
 

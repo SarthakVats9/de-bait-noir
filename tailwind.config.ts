@@ -57,6 +57,7 @@ export default {
       fontFamily: {
         typewriter: ['Special Elite', 'cursive'],
         serif: ['Crimson Pro', 'serif'],
+        cinzel: ['Cinzel Decorative', 'cursive'],
       },
       borderRadius: {
         lg: "var(--radius)",

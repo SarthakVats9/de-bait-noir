@@ -30,29 +30,39 @@ export const Hero = () => {
           />
         </div>
         
-        <h1 className="font-typewriter text-6xl md:text-8xl font-bold mb-6 animate-glitch text-spotlight">
+        <h1 className="font-cinzel text-6xl md:text-9xl font-black mb-8 text-glow-gold tracking-wider" style={{
+          background: 'linear-gradient(135deg, hsl(45 100% 65%), hsl(45 100% 45%))',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          filter: 'drop-shadow(0 0 20px hsl(45 100% 55% / 0.5))'
+        }}>
           Take DeBait 7.0
         </h1>
         
-        <p className="font-serif text-2xl md:text-3xl mb-4 text-parchment italic">
+        <p className="font-serif text-2xl md:text-3xl mb-6 text-silver italic tracking-wide">
           "When words can kill, arguments become the weapon."
         </p>
         
-        <p className="font-serif text-lg md:text-xl mb-12 text-muted-foreground max-w-2xl mx-auto">The Debating Society, NIT Durgapur presents the 7th edition of its legendary murder mystery solving
- competition.</p>
+        <p className="font-serif text-lg md:text-xl mb-12 text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          The Debating Society, NIT Durgapur presents the 7th edition of its legendary murder mystery solving competition.
+        </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Button size="lg" onClick={scrollToRegistration} className="font-typewriter text-lg px-8 py-6 bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/50 transition-all hover:scale-105">
-            Register Your Team
-          </Button>
-          
-          <Button size="lg" variant="outline" className="font-typewriter text-lg px-8 py-6 border-2 border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all hover:scale-105">
-            View Case Files
+        <div className="flex justify-center">
+          <Button 
+            size="lg" 
+            onClick={scrollToRegistration} 
+            className="group relative font-cinzel text-xl px-12 py-8 bg-gradient-to-r from-gold to-gold-soft hover:from-gold-soft hover:to-gold text-noir font-bold transition-all duration-300 hover:scale-110 shadow-glow-gold overflow-hidden"
+          >
+            <span className="relative z-10 flex items-center gap-3">
+              <Skull className="w-6 h-6 group-hover:rotate-12 transition-transform" />
+              Enter the Mystery
+            </span>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700" />
           </Button>
         </div>
 
         {/* Easter egg hint */}
-        <p className="font-serif text-sm text-muted-foreground mt-16 opacity-50 hover:opacity-100 transition-opacity">
+        <p className="font-serif text-sm text-gold/50 mt-20 opacity-40 hover:opacity-100 transition-all duration-500 hover:text-gold animate-pulse">
           🔍 Psst... hover around to find hidden clues
         </p>
       </div>
