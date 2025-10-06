@@ -30,11 +30,11 @@ export const Hero = () => {
           />
         </div>
         
-        <h1 className="font-cinzel text-6xl md:text-9xl font-black mb-8 tracking-wider" style={{
-          background: 'linear-gradient(135deg, hsl(0 75% 55%), hsl(0 65% 45%))',
+        <h1 className="font-cinzel text-6xl md:text-9xl font-black mb-8 text-glow-gold tracking-wider" style={{
+          background: 'linear-gradient(135deg, hsl(45 100% 65%), hsl(45 100% 45%))',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
-          filter: 'drop-shadow(0 0 20px hsl(0 65% 45% / 0.6)) drop-shadow(0 0 40px hsl(0 65% 45% / 0.3))'
+          filter: 'drop-shadow(0 0 20px hsl(45 100% 55% / 0.5))'
         }}>
           Take DeBait 7.0
         </h1>
