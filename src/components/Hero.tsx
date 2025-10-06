@@ -86,12 +86,10 @@ export const Hero = () => {
         </div>
         
         <h1 
-          className="font-cinzel text-6xl md:text-9xl font-black mb-8 text-glow-gold tracking-wider" 
+          className="font-cinzel text-7xl md:text-[10rem] lg:text-[12rem] font-black mb-8 tracking-tight leading-none text-white"
           style={{
-            background: 'linear-gradient(135deg, hsl(45 100% 65%), hsl(45 100% 45%))',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            filter: 'drop-shadow(0 0 20px hsl(45 100% 55% / 0.5))'
+            textShadow: '4px 4px 8px rgba(0,0,0,0.8)',
+            letterSpacing: '-0.02em'
           }}
         >
           Take DeBait 7.0
