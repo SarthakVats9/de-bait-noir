@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import noirAlleyBg from "@/assets/noir-alley.jpg";
+import crimeBoardBg from "@/assets/crime-board.jpg";
 import debsocLogo from "@/assets/debsoc-logo.png";
 import { Skull } from "lucide-react";
 import { useState, useEffect } from "react";
@@ -41,17 +41,16 @@ export const Hero = () => {
     <section 
       className="relative min-h-screen flex items-center justify-center overflow-hidden" 
       style={{
-        backgroundImage: `url(${noirAlleyBg})`,
+        backgroundImage: `url(${crimeBoardBg})`,
         backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed'
+        backgroundPosition: 'center'
       }}
     >
-      {/* Dark overlay for readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-noir/90 via-noir/70 to-noir/95 animate-fade-in" />
+      {/* Spotlight overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-noir/80 via-noir/60 to-noir/90 animate-spotlight" />
       
       {/* Fog effect */}
-      <div className="absolute inset-0 bg-gradient-to-t from-noir via-noir/50 to-transparent opacity-90" />
+      <div className="absolute inset-0 bg-gradient-to-t from-noir via-transparent to-transparent opacity-80" />
 
       {/* Morse code easter egg - top right corner */}
       <div className="absolute top-8 right-8 z-20">
@@ -86,33 +85,14 @@ export const Hero = () => {
           />
         </div>
         
-        <h1 className="mb-8">
-          <div className="font-cinzel text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-none">
-            <span 
-              className="inline-block"
-              style={{
-                background: 'linear-gradient(135deg, hsl(0 0% 100%), hsl(0 0% 70%))',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                textShadow: 'none',
-                filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.8))'
-              }}
-            >
-              Take DeBait
-            </span>
-            <span 
-              className="block text-6xl md:text-8xl lg:text-9xl mt-2"
-              style={{
-                background: 'linear-gradient(135deg, hsl(45 100% 65%), hsl(45 100% 45%))',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                filter: 'drop-shadow(0 0 30px hsl(45 100% 55% / 0.6))',
-                letterSpacing: '0.05em'
-              }}
-            >
-              7.0
-            </span>
-          </div>
+        <h1 
+          className="font-cinzel text-7xl md:text-[10rem] lg:text-[12rem] font-black mb-8 tracking-tight leading-none text-white"
+          style={{
+            textShadow: '4px 4px 8px rgba(0,0,0,0.8)',
+            letterSpacing: '-0.02em'
+          }}
+        >
+          Take DeBait 7.0
         </h1>
         
         <p className="font-serif text-2xl md:text-3xl mb-6 text-silver italic tracking-wide">

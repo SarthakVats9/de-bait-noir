@@ -1,7 +1,6 @@
 import { Calendar, MapPin, Users2, FileText } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { useState } from "react";
-import noirDetective from "@/assets/noir-detective-chair.jpg";
 
 const details = [
   {
@@ -58,19 +57,8 @@ export const EventDetails = () => {
   };
 
   return (
-    <section 
-      className="py-20 px-4 relative overflow-hidden"
-      style={{
-        backgroundImage: `url(${noirDetective})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed'
-      }}
-    >
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-secondary/95 via-noir/90 to-noir/95" />
-      
-      <div className="max-w-6xl mx-auto relative z-10">
+    <section className="py-20 px-4 relative">
+      <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16 animate-reveal">
           <h2 className="font-typewriter text-5xl md:text-6xl mb-6 text-primary">
