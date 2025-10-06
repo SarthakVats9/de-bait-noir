@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import crimeBoardBg from "@/assets/crime-board.jpg";
+import noirAlleyBg from "@/assets/noir-alley.jpg";
 import debsocLogo from "@/assets/debsoc-logo.png";
 import { Skull } from "lucide-react";
 import { useState, useEffect } from "react";
@@ -41,16 +41,17 @@ export const Hero = () => {
     <section 
       className="relative min-h-screen flex items-center justify-center overflow-hidden" 
       style={{
-        backgroundImage: `url(${crimeBoardBg})`,
+        backgroundImage: `url(${noirAlleyBg})`,
         backgroundSize: 'cover',
-        backgroundPosition: 'center'
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed'
       }}
     >
-      {/* Spotlight overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-noir/80 via-noir/60 to-noir/90 animate-spotlight" />
+      {/* Dark overlay for readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-noir/90 via-noir/70 to-noir/95 animate-fade-in" />
       
       {/* Fog effect */}
-      <div className="absolute inset-0 bg-gradient-to-t from-noir via-transparent to-transparent opacity-80" />
+      <div className="absolute inset-0 bg-gradient-to-t from-noir via-noir/50 to-transparent opacity-90" />
 
       {/* Morse code easter egg - top right corner */}
       <div className="absolute top-8 right-8 z-20">

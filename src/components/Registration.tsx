@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Stamp } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import noirStreet from "@/assets/noir-man-street.jpg";
 
 
 export const Registration = () => {
@@ -131,7 +132,19 @@ export const Registration = () => {
   };
 
   return (
-    <section id="registration" className="py-20 px-4 bg-gradient-to-b from-secondary to-noir relative overflow-hidden">
+    <section 
+      id="registration" 
+      className="py-20 px-4 relative overflow-hidden"
+      style={{
+        backgroundImage: `url(${noirStreet})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed'
+      }}
+    >
+      {/* Dark overlay for readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-secondary/95 via-noir/95 to-noir/98" />
+      
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-10 left-5 text-9xl font-typewriter text-primary rotate-12">?</div>
@@ -329,16 +342,20 @@ export const Registration = () => {
               </div>
             </div>
 
-            {/* Submit button styled as wax seal */}
+            {/* Submit button with enhanced glow */}
             <div className="pt-6 flex justify-center">
               <Button
                 type="submit"
                 size="lg"
                 disabled={isSubmitting}
-                className="font-typewriter text-lg px-12 py-6 bg-primary hover:bg-primary/90 text-primary-foreground shadow-2xl shadow-primary/50 transition-all hover:scale-105 relative group disabled:opacity-50 disabled:cursor-not-allowed"
+                className="font-typewriter text-lg px-12 py-6 bg-gradient-to-r from-gold to-gold-soft hover:from-gold-soft hover:to-gold text-noir shadow-2xl transition-all hover:scale-110 relative group disabled:opacity-50 disabled:cursor-not-allowed animate-pulse"
+                style={{
+                  boxShadow: '0 0 40px hsl(var(--gold) / 0.6), 0 0 80px hsl(var(--gold) / 0.4)'
+                }}
               >
                 <Stamp className="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform" />
                 {isSubmitting ? "Filing Alibi..." : "Submit Alibi"}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700" />
               </Button>
             </div>
           </form>

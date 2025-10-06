@@ -1,6 +1,7 @@
 import { Scale, Users, Award } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { useState } from "react";
+import investigationBoard from "@/assets/investigation-board.jpg";
 
 export const About = () => {
   const [pinClicks, setPinClicks] = useState<number[]>([]);
@@ -28,8 +29,19 @@ export const About = () => {
   };
 
   return (
-    <section className="py-20 px-4 relative">
-      <div className="max-w-6xl mx-auto">
+    <section 
+      className="py-20 px-4 relative overflow-hidden"
+      style={{
+        backgroundImage: `url(${investigationBoard})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed'
+      }}
+    >
+      {/* Dark overlay for readability */}
+      <div className="absolute inset-0 bg-noir/95" />
+      
+      <div className="max-w-6xl mx-auto relative z-10">
         {/* Section header */}
         <div className="text-center mb-16 animate-reveal">
           <h2 className="font-typewriter text-5xl md:text-6xl mb-6 text-primary">

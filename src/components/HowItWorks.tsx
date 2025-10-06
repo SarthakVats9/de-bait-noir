@@ -1,5 +1,6 @@
 import { Users, Gavel, Target, Trophy } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import mysteryDesk from "@/assets/mystery-lamp-desk.jpg";
 
 const steps = [
   {
@@ -54,7 +55,18 @@ export const HowItWorks = () => {
   };
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-noir to-secondary relative overflow-hidden">
+    <section 
+      className="py-20 px-4 relative overflow-hidden"
+      style={{
+        backgroundImage: `url(${mysteryDesk})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed'
+      }}
+    >
+      {/* Dark overlay with gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-noir/95 via-noir/90 to-secondary/95" />
+      
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-20 left-10 w-64 h-64 border-2 border-primary rounded-full" />
