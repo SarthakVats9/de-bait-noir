@@ -5,7 +5,6 @@ import { Skull } from "lucide-react";
 import { useState, useEffect } from "react";
 export const Hero = () => {
   const [morseVisible, setMorseVisible] = useState(true);
-  const [timeMessage, setTimeMessage] = useState("");
 
   // Morse code blinking effect
   useEffect(() => {
@@ -13,20 +12,6 @@ export const Hero = () => {
       setMorseVisible(prev => !prev);
     }, 500);
     return () => clearInterval(interval);
-  }, []);
-
-  // Time-based message
-  useEffect(() => {
-    const hour = new Date().getHours();
-    if (hour >= 0 && hour < 6) {
-      setTimeMessage("🌙 Burning the midnight oil? A true detective never sleeps!");
-    } else if (hour >= 6 && hour < 12) {
-      setTimeMessage("🌅 Morning detective! Early bird catches the clues.");
-    } else if (hour >= 12 && hour < 18) {
-      setTimeMessage("☀️ Afternoon investigation in progress...");
-    } else {
-      setTimeMessage("🌆 Evening detective! Prime time for case solving.");
-    }
   }, []);
   const scrollToRegistration = () => {
     const registration = document.getElementById("registration");
@@ -56,9 +41,6 @@ export const Hero = () => {
         }
       }} title="Strange blinking light..." />
       </div>
-
-      {/* Time-based message */}
-      {timeMessage}
 
       {/* Content */}
       <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">

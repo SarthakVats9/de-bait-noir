@@ -8,7 +8,6 @@ import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 import { KonamiEasterEgg } from "./components/KonamiEasterEgg";
-import { ScrollEasterEgg } from "./components/ScrollEasterEgg";
 import { InspectorMode } from "./components/InspectorMode";
 
 const queryClient = new QueryClient();
@@ -19,7 +18,6 @@ const App = () => (
       <Toaster />
       <Sonner />
       <KonamiEasterEgg />
-      <ScrollEasterEgg />
       <InspectorMode />
       <BrowserRouter>
         <Routes>
