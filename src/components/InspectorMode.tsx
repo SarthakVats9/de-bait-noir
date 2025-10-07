@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-
 export const InspectorMode = () => {
   const [inspectorMode, setInspectorMode] = useState(false);
-
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Shift + D to toggle inspector mode
       if (e.shiftKey && e.key === "D") {
         e.preventDefault();
         setInspectorMode(prev => !prev);
-        
         const toast = (window as any).toast;
         if (toast && !inspectorMode) {
           toast("👁️ Inspector Mode Activated!", {
@@ -19,21 +16,13 @@ export const InspectorMode = () => {
         }
       }
     };
-
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [inspectorMode]);
-
   if (!inspectorMode) {
-    return (
-      <div className="fixed bottom-4 left-4 z-40 bg-noir/50 border border-accent/20 px-3 py-2 rounded font-typewriter text-xs text-accent/50 hover:text-accent hover:border-accent transition-all">
-        💡 Press Shift+D for Inspector Mode
-      </div>
-    );
+    return;
   }
-
-  return (
-    <>
+  return <>
       {/* Overlay dimming */}
       <div className="fixed inset-0 bg-noir/70 z-40 pointer-events-none" />
       
@@ -64,10 +53,7 @@ export const InspectorMode = () => {
       </div>
 
       {/* Exit button */}
-      <button
-        onClick={() => setInspectorMode(false)}
-        className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 bg-noir border border-accent px-4 py-2 rounded font-typewriter text-sm text-accent hover:bg-accent hover:text-noir transition-all flex items-center gap-2"
-      >
+      <button onClick={() => setInspectorMode(false)} className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 bg-noir border border-accent px-4 py-2 rounded font-typewriter text-sm text-accent hover:bg-accent hover:text-noir transition-all flex items-center gap-2">
         <EyeOff className="w-4 h-4" />
         Exit Inspector Mode
       </button>
@@ -88,6 +74,5 @@ export const InspectorMode = () => {
           <li>• Time-based message (hero)</li>
         </ul>
       </div>
-    </>
-  );
+    </>;
 };

@@ -3,7 +3,6 @@ import crimeBoardBg from "@/assets/crime-board.jpg";
 import debsocLogo from "@/assets/debsoc-logo.png";
 import { Skull } from "lucide-react";
 import { useState, useEffect } from "react";
-
 export const Hero = () => {
   const [morseVisible, setMorseVisible] = useState(true);
   const [timeMessage, setTimeMessage] = useState("");
@@ -29,23 +28,17 @@ export const Hero = () => {
       setTimeMessage("🌆 Evening detective! Prime time for case solving.");
     }
   }, []);
-
   const scrollToRegistration = () => {
     const registration = document.getElementById("registration");
     registration?.scrollIntoView({
       behavior: "smooth"
     });
   };
-
-  return (
-    <section 
-      className="relative min-h-screen flex items-center justify-center overflow-hidden" 
-      style={{
-        backgroundImage: `url(${crimeBoardBg})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center'
-      }}
-    >
+  return <section className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{
+    backgroundImage: `url(${crimeBoardBg})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center'
+  }}>
       {/* Spotlight overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-noir/80 via-noir/60 to-noir/90 animate-spotlight" />
       
@@ -54,61 +47,43 @@ export const Hero = () => {
 
       {/* Morse code easter egg - top right corner */}
       <div className="absolute top-8 right-8 z-20">
-        <div 
-          className={`w-3 h-3 rounded-full bg-red-500 transition-opacity duration-100 cursor-pointer ${morseVisible ? 'opacity-100' : 'opacity-0'}`}
-          onClick={() => {
-            const toast = (window as any).toast;
-            if (toast) {
-              toast("📡 Morse Signal Detected!", {
-                description: "Evidence #6: 'TD7' in morse code - The truth blinks in the darkness"
-              });
-            }
-          }}
-          title="Strange blinking light..."
-        />
+        <div className={`w-3 h-3 rounded-full bg-red-500 transition-opacity duration-100 cursor-pointer ${morseVisible ? 'opacity-100' : 'opacity-0'}`} onClick={() => {
+        const toast = (window as any).toast;
+        if (toast) {
+          toast("📡 Morse Signal Detected!", {
+            description: "Evidence #6: 'TD7' in morse code - The truth blinks in the darkness"
+          });
+        }
+      }} title="Strange blinking light..." />
       </div>
 
       {/* Time-based message */}
-      {timeMessage && (
-        <div className="absolute top-8 left-8 z-20 bg-noir/80 border border-gold/30 px-4 py-2 rounded font-serif text-sm text-gold/80 max-w-xs">
-          {timeMessage}
-        </div>
-      )}
+      {timeMessage}
 
       {/* Content */}
       <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
         <div className="mb-8 flex justify-center">
-          <img 
-            src={debsocLogo} 
-            alt="Debating Society NIT Durgapur Logo" 
-            className="w-24 h-24 md:w-32 md:h-32 object-contain brightness-0 invert opacity-90 animate-float"
-          />
+          <img src={debsocLogo} alt="Debating Society NIT Durgapur Logo" className="w-24 h-24 md:w-32 md:h-32 object-contain brightness-0 invert opacity-90 animate-float" />
         </div>
         
         <h1 className="mb-8">
           <div className="font-cinzel text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-none">
-            <span 
-              className="inline-block"
-              style={{
-                background: 'linear-gradient(135deg, hsl(0 0% 100%), hsl(0 0% 70%))',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                textShadow: 'none',
-                filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.8))'
-              }}
-            >
+            <span className="inline-block" style={{
+            background: 'linear-gradient(135deg, hsl(0 0% 100%), hsl(0 0% 70%))',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            textShadow: 'none',
+            filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.8))'
+          }}>
               Take DeBait
             </span>
-            <span 
-              className="block text-6xl md:text-8xl lg:text-9xl mt-2"
-              style={{
-                background: 'linear-gradient(135deg, hsl(45 100% 65%), hsl(45 100% 45%))',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                filter: 'drop-shadow(0 0 30px hsl(45 100% 55% / 0.6))',
-                letterSpacing: '0.05em'
-              }}
-            >
+            <span className="block text-6xl md:text-8xl lg:text-9xl mt-2" style={{
+            background: 'linear-gradient(135deg, hsl(45 100% 65%), hsl(45 100% 45%))',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            filter: 'drop-shadow(0 0 30px hsl(45 100% 55% / 0.6))',
+            letterSpacing: '0.05em'
+          }}>
               7.0
             </span>
           </div>
@@ -123,11 +98,7 @@ export const Hero = () => {
         </p>
 
         <div className="flex justify-center">
-          <Button 
-            size="lg" 
-            onClick={scrollToRegistration} 
-            className="group relative font-cinzel text-xl px-12 py-8 bg-gradient-to-r from-gold to-gold-soft hover:from-gold-soft hover:to-gold text-noir font-bold transition-all duration-300 hover:scale-110 shadow-glow-gold overflow-hidden"
-          >
+          <Button size="lg" onClick={scrollToRegistration} className="group relative font-cinzel text-xl px-12 py-8 bg-gradient-to-r from-gold to-gold-soft hover:from-gold-soft hover:to-gold text-noir font-bold transition-all duration-300 hover:scale-110 shadow-glow-gold overflow-hidden">
             <span className="relative z-10 flex items-center gap-3">
               <Skull className="w-6 h-6 group-hover:rotate-12 transition-transform" />
               Enter the Mystery
@@ -144,6 +115,5 @@ export const Hero = () => {
 
       {/* Bottom fade */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-noir to-transparent" />
-    </section>
-  );
+    </section>;
 };
